@@ -706,34 +706,54 @@ Rules:
 </div>
 </div>
 <div class="card">
-<h3>4.4 · Cowork all-in-one alternative</h3>
-<p class="lead">If I want the whole package in one orchestrated run, I use Cowork, but I keep the same assumption block at the top so the numbers match the Excel-only route.</p>
+<h3>4.4 · Cowork alternative one-prompt path · Excel + Word + PowerPoint + HTML + email + meeting</h3>
+<p class="lead">If I want the whole package in one orchestrated run, I use Cowork. Same rule block as Task 4.1 so the numbers stay identical, and I get one extra output that Excel cannot give me: a self-contained HTML dashboard I can share offline.</p>
 <div class="activity">
-<div class="head"><span class="num">Task 4.4</span><span class="file">👥 Cowork · all-in-one</span></div>
-<h4>Reproduce Excel, PowerPoint, Word, email, and meeting in one run</h4>
-<div class="prompt">Cowork, run my vendor contract book workflow end to end.
+<div class="head"><span class="num">Task 4.4</span><span class="file">👥 Cowork · alternative one-prompt path · Excel + Word + PowerPoint + HTML + email + meeting</span></div>
+<h4>Vendor Contract Book in a single Cowork run, all four artefacts, plus the email out and the meeting booked</h4>
+<div class="callout" style="background:#fef3c7;border-color:#f59e0b"><b>Use this when I do not have time to run 4.1, 4.2 and 4.3 end-to-end in three separate apps.</b> Tasks 4.1 to 4.3 walk me through Excel then PowerPoint then Word in-app so the audience sees Copilot behave differently in each surface. Task 4.4 produces the same four artefacts in one Cowork run, plus a self-contained HTML dashboard, plus the email to the CFO and Procurement Director, plus the vendor review meeting invite. Faster, less teaching value, more useful when I just need the outputs on the table before a real executive committee.</div>
+<div class="prompt">Cowork, run my full vendor contract book workflow for GM Strategic Commercial &amp; IT at Contoso Gold Mining Co in ONE go. Ground everything on /02 Contoso_Vendor_Contracts.xlsx. Show your plan first, let me edit any step, and pause before sending the email or scheduling the meeting.
 
-ASSUMPTION / RULE BLOCK, USE THESE EXACTLY:
+Story I am telling in all four artefacts: today my vendor book is 200 plus active contracts, worth millions of dollars a year, exposed to auto-renew traps, single-source risk, weak SLAs, and USD to IDR swings. I will (1) FLAG which contracts renew in the next 90 days, (2) SCORE risk on a consistent 0 to 12 scale, and (3) QUANTIFY the estimated annual saving from a Top 10 renegotiation list. Same numbers everywhere, so the CFO, Procurement Director, Legal Lead, and I are all reading the same story.
+
+ASSUMPTION AND RULE BLOCK, USE EXACTLY THESE (this is the audit trail, do not invent your own thresholds)
 - Days to Expiry = Contract Expiry Date minus today.
 - Renewal Window flag = YES if Days to Expiry is less than or equal to 90, otherwise NO.
-- Risk Score is on a 0-12 scale and equals the sum of 4 sub-scores, each on a 0-3 scale: Single Source Risk, SLA Weakness Risk, Auto Renew Risk, FX Exposure Risk.
-- Priority Band = HIGH if Risk Score is 8-12, MEDIUM if Risk Score is 4-7, LOW if Risk Score is 0-3.
-- Savings Opportunity percent = 15% if Priority Band is HIGH and the contract is single-source, 10% if Priority Band is MEDIUM, 5% if Priority Band is LOW.
+- Risk Score is on a 0 to 12 scale and equals the sum of 4 sub-scores, each on a 0 to 3 scale: Single Source Risk, SLA Weakness Risk, Auto Renew Risk, FX Exposure Risk.
+- Sub-score rules: Single Source Risk = 3 if single-source flag is YES else 0; SLA Weakness Risk = 3 if SLA teeth are weak or absent else 0; Auto Renew Risk = 3 if auto-renew flag is YES else 0; FX Exposure Risk = 3 if contract currency is not IDR and there is no FX hedge clause else 0.
+- Priority Band = HIGH if Risk Score is 8 to 12, MEDIUM if Risk Score is 4 to 7, LOW if Risk Score is 0 to 3.
+- Savings Opportunity percent = 15 percent if Priority Band is HIGH and the contract is single-source, 10 percent if Priority Band is MEDIUM, 5 percent if Priority Band is LOW.
+- Estimated Annual Saving USD = Annual Contract Value USD multiplied by Savings Opportunity percent.
+- Top 10 Renegotiation List = the 10 contracts with the highest Estimated Annual Saving USD, tie-break by Risk Score descending, then by Days to Expiry ascending.
 
-I am Pak Rizky Wijaksono, GM Strategic Commercial &amp; IT at Contoso Gold Mining Co. Use /02 Contoso_Vendor_Contracts.xlsx.
+Do all of the following, in order:
 
-Do all of the following:
-1. Recreate the Excel outputs from Task 4.1 exactly: GM Working - Vendor Book, GM Working - Renegotiation Top 10, GM Glossary - How to Read This, GM Dashboard - Vendor Book.
-2. Draft the 5-slide board deck from the workbook.
-3. Draft the 1-page memo from the deck.
-4. Draft an email to the CFO and Procurement Director summarising the Top 10 renegotiation list, the total estimated annual saving, and the decisions needed. Do not send it.
-5. Draft the vendor review meeting invite with the CFO, Procurement Director, Legal Lead, and me. Do not schedule it.
+1. EXCEL, open /02 Contoso_Vendor_Contracts.xlsx (leave the raw contract sheet untouched) and add four new sheets. Use EXACTLY the same thresholds and formulas as Task 4.1 so this Cowork run and a Task 4.1 run produce identical numbers.
+   - "GM Working - Vendor Book" one Excel Table, one row per contract, with calculated columns: Contract ID, Vendor Name, Category, Annual Contract Value USD, Contract Expiry Date, Days to Expiry, Renewal Window flag, Single Source Risk, SLA Weakness Risk, Auto Renew Risk, FX Exposure Risk, Risk Score, Priority Band, Savings Opportunity percent, Estimated Annual Saving USD, Short Recommendation (one line), Category Sparkline (5-bar inline of contracts in same Category by band).
+   - "GM Working - Renegotiation Top 10" one row per contract in the Top 10: Rank, Vendor Name, Category, Annual Contract Value USD, Days to Expiry, Priority Band, Estimated Annual Saving USD, Short Recommendation. Sorted per the tie-break rule above.
+   - "GM Glossary - How to Read This" two tables (GM Working columns, Renegotiation Top 10 columns) with Section, Column Name, What it calculates (plain English), Why the GM cares. Every calculated column above must appear here.
+   - "GM Dashboard - Vendor Book" six KPI scorecards (Total Contracts, HIGH count, Renewals Next 90 Days count, Total Annual Contract Value USD, Estimated Annual Saving USD, FX Exposure percent with RAG), plus Top 10 Renegotiation bars (gold), Priority Band split donut (HIGH red, MEDIUM amber, LOW green), Renewals Next 90 Days list, Category concentration column chart, Top 10 Single-Source vendors bars. Add navigation links bottom-right to the Glossary sheet, working sheet, and Top 10 sheet.
+   Save as /Contoso_Vendor_Book_GM.xlsx.
 
-Rules:
-- Keep the raw workbook untouched.
-- Use only technically feasible Excel features: tables, formulas, filters, sparklines, conditional formatting, and standard charts.
-- Stop before sending the email or scheduling the meeting.
-- Show me the drafts for review.<button class="copy" onclick="cp(this)">Copy</button></div>
+2. WORD, draft a 1-page GM memo "Contoso Gold Mining Co · Vendor Book Renegotiation, What we recommend the executive committee approves". Structure: headline (biggest saving driver in one line), Top 5 Renegotiation Targets (vendor + annual value USD + estimated saving USD + one-line why), Top 5 Risks to Retire (vendor + risk band + mitigation), total estimated annual saving USD, 90-day action plan with owners (GM Strategic Commercial &amp; IT, Procurement Director, Legal Lead), one clear ask of the executive committee. Ground every number on the Excel file you just created. Save as /Contoso_Vendor_Book_Memo.docx.
+
+3. POWERPOINT, draft a 5-slide BCG / McKinsey-style deck grounded on the memo AND the workbook. Action-title headlines, one message per slide, max 25 words body.
+   Slide 1 Cover
+   Slide 2 Executive summary (three headline numbers: HIGH-priority count, Estimated Annual Saving USD, Renewals Next 90 Days count)
+   Slide 3 The Top 10 Renegotiation List (horizontal bar chart of Estimated Annual Saving USD pasted from the workbook, plus one-line Short Recommendation next to each bar)
+   Slide 4 Risk concentration (Priority Band donut and Renewals Next 90 Days list from the workbook)
+   Slide 5 The ask (approve the Top 10 list, adopt the 90-day action plan, assign the FX exposure workstream)
+   Brand: gold #C9A227 + deep earth brown #4A3728 + slate #334155, restrained and executive. Save as /Contoso_Vendor_Book_Deck.pptx.
+
+4. HTML DASHBOARD, generate a self-contained /Contoso_Vendor_Book_Dashboard.html file that mirrors the Excel dashboard but adds a TOGGLE at the top: "View by Vendor" vs "View by Category". When the toggle is on Vendor, show the Top 10 Renegotiation bars, Priority Band donut, Renewals Next 90 Days list, and a filterable table of all contracts with search + column sort. When the toggle is on Category, show Category concentration bars, Top 10 Single-Source vendors, and the same filterable table grouped by Category. Six KPI scorecards stay visible on both views. Brand-coloured header band (gold + deep earth brown), all CSS inline, minimal vanilla JavaScript for the toggle / search / sort only (no external libraries, no CDN, no network calls, must open offline from OneDrive or a USB stick). Include a "How to read this dashboard" accordion at the bottom that mirrors the Excel Glossary sheet.
+
+5. EMAIL, draft an email in Outlook from me (Pak Rizky Wijaksono, GM Strategic Commercial &amp; IT) to the CFO and Procurement Director, cc Legal Lead. Subject: "Vendor book renegotiation, decisions needed by Friday". Body: two-line headline (Total Annual Contract Value USD, Estimated Annual Saving USD), a "Top 5 renegotiation targets" bullet list, a "Top 5 risks to retire" bullet list, an "Ask" line ("approve the Top 10 list, adopt the 90-day action plan, sign off in the vendor review meeting"), and attach all four files. STOP, show me the draft to review before sending.
+
+6. MEETING, draft a 45-minute Outlook meeting invite: title "Vendor Book Renegotiation Review · Contoso Gold Mining Co". Time: Wednesday next week 10:00 to 10:45 Jakarta time. Attendees: CFO, Procurement Director, Legal Lead, me as organiser. Body: three-line agenda ("1. Approve the Top 10 renegotiation list", "2. Confirm the 90-day action plan and owners", "3. Assign the FX exposure workstream"), attach the memo and the deck. STOP, show me the invite to review before scheduling.
+
+Reminders: raw contract sheet untouched · every calculated column defined in the Glossary sheet · same numbers everywhere · HTML dashboard must be one file with no dependencies · pause before sending email or scheduling meeting so I can review both.<button class="copy" onclick="cp(this)">Copy</button></div>
+<div class="callout"><b>Closing line for the audience:</b> "One Cowork prompt. Six things done: Excel dashboard, one-page memo, five-slide deck, offline HTML dashboard, executive email drafted, and the vendor review meeting booked. Cowork paused at both the send and the schedule step so I stayed in control. Same numbers across every artefact, flag the renewals, score the risk, quantify the saving. Raw contract sheet untouched."</div>
+<div class="callout warn"><b>Reality check on Cowork multi-artefact runs:</b> Cowork can plan, hand off between apps, produce Excel + Word + PowerPoint + HTML, draft the email and draft the meeting in one session. It WILL pause before sending or scheduling, that pause is a feature, not a bug. What varies is quality per surface: expect to review the Excel formulas (the reliability bar for SUMIFS and XLOOKUP on the vendor sheet is the same as Task 4.1, if it drifts, follow up with the same corrective prompt from 4.1). PowerPoint chart fidelity is best when Copilot pastes chart images from the workbook rather than rebuilding charts natively. HTML dashboard with vanilla JS toggle + client-side filter is well within reach, do NOT ask Cowork to add Chart.js or a CDN because the file must open offline.</div>
 </div>
 </div>
 </section><div class="lab-nav-ihh"><button class="secondary" data-go="ex4">← Market &amp; Competitor Intel</button><button data-go="ex6">Next: Visual Infographic →</button></div></div><div class="view-ihh" id="view-ex6"><section id="ex6">
