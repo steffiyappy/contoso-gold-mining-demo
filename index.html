@@ -430,7 +430,7 @@ body.ihh-active .view-ihh > section .modulehead { margin-top:8px !important; }
 <table>
 <tr><th>#</th><th>File</th><th>Type</th><th>Used in</th><th>Contains</th></tr>
 <tr><td>01</td><td><a href="samples/01 Contoso_Market_Brief.xlsx">01 Contoso_Market_Brief.xlsx</a></td><td><span class="badge blue">Excel</span></td><td>Ex 3</td><td>Gold sector peer benchmark, 2024-2028 market sizing, SWOT</td></tr>
-<tr><td>02</td><td><a href="samples/02 Contoso_Vendor_Contracts.xlsx">02 Contoso_Vendor_Contracts.xlsx</a></td><td><span class="badge blue">Excel</span></td><td>Ex 4, Bonus</td><td>200+ vendor contracts with categories, values, expiry, SLA, single-source, and auto-renew flags</td></tr>
+<tr><td>02</td><td><a href="samples/02 Contoso_Vendor_Contracts.xlsx">02 Contoso_Vendor_Contracts.xlsx</a></td><td><span class="badge blue">Excel</span></td><td>Ex 4, Bonus</td><td>210 vendor contracts across 17 categories, with pricing currency, expiry, SLA teeth, single-source and auto-renew flags</td></tr>
 <tr><td>03</td><td><a href="samples/03 Contoso_Mail_Merge_Recipients.xlsx">03 Contoso_Mail_Merge_Recipients.xlsx</a></td><td><span class="badge blue">Excel</span></td><td>Bonus (Mail Merge)</td><td>Stakeholder and community-leader mailing list</td></tr>
 <tr><td>04</td><td><a href="samples/04 Contoso_Brand_Guidelines.docx">04 Contoso_Brand_Guidelines.docx</a></td><td><span class="badge yellow">Word</span></td><td>Ex 5, Bonus</td><td>Brand tone + GM comms template + press release structure</td></tr>
 <tr><td>05</td><td><a href="samples/05 Contoso_Board_Pack.docx">05 Contoso_Board_Pack.docx</a></td><td><span class="badge yellow">Word</span></td><td>Bonus (Word interrogate + Board pack in 30 min)</td><td>Mock quarterly Board pack, about 30 pages</td></tr>
@@ -645,11 +645,13 @@ Detailed requirements:
 - Estimated Annual Saving USD
 - Short Recommendation
 
-Sub-score logic:
-- Single Source Risk = 3 if single-source flag is YES, else 0.
-- SLA Weakness Risk = 3 if SLA teeth are weak or absent, else 0.
-- Auto Renew Risk = 3 if auto-renew flag is YES, else 0.
-- FX Exposure Risk = 3 if the pricing currency is not IDR, else 0.
+Source columns on the raw Contracts sheet (use these EXACT header names): Contract ID, Vendor Name, Category, Annual Contract Value USD, Pricing Currency, Contract Start Date, Contract Expiry Date, Auto-Renew (Y/N), SLA Present (Y/N), SLA Teeth, Single-Source (Y/N), Payment Terms, Country of Vendor, Contact Person, Notes.
+
+Sub-score logic (use EXACTLY these rules):
+- Single Source Risk = 3 if Single-Source (Y/N) = Y, else 0.
+- SLA Weakness Risk = 3 if SLA Teeth is Weak or Absent, else 0.
+- Auto Renew Risk = 3 if Auto-Renew (Y/N) = Y, else 0.
+- FX Exposure Risk = 3 if Pricing Currency is not IDR, else 0.
 
 Short Recommendation should read like plain English, for example: "Renewal due soon, high leverage, renegotiate now".
 
@@ -725,13 +727,15 @@ Rules:
 <div class="callout" style="background:#fef3c7;border-color:#f59e0b"><b>Use this when I do not have time to run 4.1, 4.2 and 4.3 end-to-end in three separate apps.</b> Tasks 4.1 to 4.3 walk me through Excel then PowerPoint then Word in-app so the audience sees Copilot behave differently in each surface. Task 4.4 produces the same four artefacts in one Cowork run, plus a self-contained HTML dashboard, plus the email to the CFO and Procurement Director, plus the vendor review meeting invite. Faster, less teaching value, more useful when I just need the outputs on the table before a real executive committee.</div>
 <div class="prompt">Cowork, run my full vendor contract book workflow for GM Strategic Commercial &amp; IT at Contoso Gold Mining Co in ONE go. Ground everything on /02 Contoso_Vendor_Contracts.xlsx. Show your plan first, let me edit any step, and pause before sending the email or scheduling the meeting.
 
-Story I am telling in all four artefacts: today my vendor book is 200 plus active contracts, worth millions of dollars a year, exposed to auto-renew traps, single-source risk, weak SLAs, and USD to IDR swings. I will (1) FLAG which contracts renew in the next 90 days, (2) SCORE risk on a consistent 0 to 12 scale, and (3) QUANTIFY the estimated annual saving from a Top 10 renegotiation list. Same numbers everywhere, so the CFO, Procurement Director, Legal Lead, and I are all reading the same story.
+Story I am telling in all four artefacts: today my vendor book is 210 active contracts across 17 categories, worth millions of dollars a year, exposed to auto-renew traps, single-source risk, weak SLAs, and USD to IDR swings. I will (1) FLAG which contracts renew in the next 90 days, (2) SCORE risk on a consistent 0 to 12 scale, and (3) QUANTIFY the estimated annual saving from a Top 10 renegotiation list. Same numbers everywhere, so the CFO, Procurement Director, Legal Lead, and I are all reading the same story.
+
+Source columns on the raw Contracts sheet (use these EXACT header names): Contract ID, Vendor Name, Category, Annual Contract Value USD, Pricing Currency, Contract Start Date, Contract Expiry Date, Auto-Renew (Y/N), SLA Present (Y/N), SLA Teeth, Single-Source (Y/N), Payment Terms, Country of Vendor, Contact Person, Notes. Annual Contract Value USD is ALWAYS in USD regardless of Pricing Currency, so all rows are directly comparable.
 
 ASSUMPTION AND RULE BLOCK, USE EXACTLY THESE (this is the audit trail, do not invent your own thresholds)
 - Days to Expiry = Contract Expiry Date minus today.
 - Renewal Window flag = YES if Days to Expiry is less than or equal to 90, otherwise NO.
 - Risk Score is on a 0 to 12 scale and equals the sum of 4 sub-scores, each on a 0 to 3 scale: Single Source Risk, SLA Weakness Risk, Auto Renew Risk, FX Exposure Risk.
-- Sub-score rules: Single Source Risk = 3 if single-source flag is YES else 0; SLA Weakness Risk = 3 if SLA teeth are weak or absent else 0; Auto Renew Risk = 3 if auto-renew flag is YES else 0; FX Exposure Risk = 3 if contract currency is not IDR and there is no FX hedge clause else 0.
+- Sub-score rules: Single Source Risk = 3 if Single-Source (Y/N) = Y, else 0; SLA Weakness Risk = 3 if SLA Teeth is Weak or Absent, else 0; Auto Renew Risk = 3 if Auto-Renew (Y/N) = Y, else 0; FX Exposure Risk = 3 if Pricing Currency is not IDR, else 0.
 - Priority Band = HIGH if Risk Score is 8 to 12, MEDIUM if Risk Score is 4 to 7, LOW if Risk Score is 0 to 3.
 - Savings Opportunity percent = 15 percent if Priority Band is HIGH and the contract is single-source, 10 percent if Priority Band is MEDIUM, 5 percent if Priority Band is LOW.
 - Estimated Annual Saving USD = Annual Contract Value USD multiplied by Savings Opportunity percent.
